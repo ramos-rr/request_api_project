@@ -8,6 +8,7 @@ pylint = "*"
 pre-commit = "*"
 pytest = "*"
 requests = "*"
+requests-mock = "*"
 
 [dev-packages]
 
