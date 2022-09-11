@@ -1,15 +1,16 @@
 import requests
-from typing import Type
+from typing import Type  # Tuple, Dict
 from requests import Request
 from collections import namedtuple
+from src.errors import HttpRequestErrors
 
 
 class SwapiApiConsumer:
 
     def __init__(self):
-        self.get_starships_response = namedtuple(typename='GET_response', field_names='status_code, request, response')
+        self.get_starships_response = namedtuple(typename='GET_Starships', field_names='status_code, request, response')
 
-    def get_starships(self, page: int) -> any:
+    def get_starships(self, page: int) -> 'GET_Starships':
         """
         Funtion to get an HTTP from StarWars Starships.
         :param page: int: Page number desired.
@@ -23,17 +24,22 @@ class SwapiApiConsumer:
         req_row = requests.Request(
             method='GET',
             url='https://swapi.dev/api/starships/',
-            params={'page': page}
-
+            params={'page': page},
         )
         req_prepared = req_row.prepare()  # function prepare() comes with requests
         response = self.__send_http_requests(req_prepared)
+        status_code = response.status_code
 
-        return self.get_starships_response(
-            status_code=response.status_code,
-            request=req_row,
-            response=response.json()
-        )
+        if 200 <= status_code <= 299:
+            return self.get_starships_response(
+                status_code=status_code,
+                request=req_row,
+                response=response.json()
+            )
+        else:
+            raise HttpRequestErrors(
+                message=response.json()["detail"], status_code=status_code
+            )
 
     @classmethod
     def __send_http_requests(cls, req_prepared: Type[Request]) -> any:

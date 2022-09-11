@@ -9,6 +9,8 @@ pre-commit = "*"
 pytest = "*"
 requests = "*"
 requests-mock = "*"
+pytest-cov = "*"
+python-decouple = "*"
 
 [dev-packages]
 
