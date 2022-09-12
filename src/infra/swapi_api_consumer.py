@@ -21,19 +21,19 @@ class SwapiApiConsumer:
         # response = requests.get('https://swapi.dev/api/starships/', params=params)
 
         # Below, a more sophisticated method to use GET
-        req_row = requests.Request(
+        req_raw = requests.Request(
             method='GET',
             url='https://swapi.dev/api/starships/',
             params={'page': page},
         )
-        req_prepared = req_row.prepare()  # function prepare() comes with requests
+        req_prepared = req_raw.prepare()  # function prepare() comes with requests
         response = self.__send_http_requests(req_prepared)
         status_code = response.status_code
 
         if 200 <= status_code <= 299:
             return self.get_starships_response(
                 status_code=status_code,
-                request=req_row,
+                request=req_raw,
                 response=response.json()
             )
         else:
@@ -42,7 +42,7 @@ class SwapiApiConsumer:
             )
 
     @classmethod
-    def __send_http_requests(cls, req_prepared: Type[Request]) -> any:
+    def __send_http_requests(cls, req_prepared: Type[Request]) -> Type[Request]:
         """
         Function to send HTTP to API in the right format.
         :param req_prepared: address informed by the function get_startship above
