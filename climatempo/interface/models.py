@@ -29,7 +29,7 @@ class WeatherRequestInterface(ABC):
 
 class IdRequestInterface(ABC):
 
-    __TOKEN_CLIMATEMPO = NotImplementedError
+    __TOKEN_CLIMATEMPO = config('TOKEN_CLIMATEMPO')
 
     @abstractmethod
     def get_id(self, city, token) -> None:

@@ -15,22 +15,13 @@ class ErrorRaise:
         :return: If no error has been found, return Response back. If there's an error, return raises the right error
         """
         if 299 >= response.status_code >= 200:
-            pass
+            if response.status_code == 200 and response.text == '[]':
+                raise NoDataFoundError(message='No data has been found')
+            else:
+                pass
         elif response.status_code == 400:
             raise InvalidTokenError(message=response.json()['detail'], status_code=response.status_code)
         elif response.status_code == 404:
             raise HttpRequestErrors(message=response.reason, status_code=response.status_code)
         else:
             raise OtherError(message=response.text, status_code=response.status_code)
-
-        try:
-            if len(response.json()) == 0:
-                raise NoDataFoundError(message='No data was found')
-            else:
-                pass
-        except:
-            pass
-        else:
-            return None
-
-

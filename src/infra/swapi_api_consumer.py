@@ -1,11 +1,12 @@
 import requests
 from typing import Type  # Tuple, Dict
-from requests import Request
+from requests import Request, Response
 from collections import namedtuple
+from src.data.interfaces.swapi_api_consumer import SwapiApiConsumerInterface
 from src.errors import HttpRequestErrors
 
 
-class SwapiApiConsumer:
+class SwapiApiConsumer(SwapiApiConsumerInterface):
 
     def __init__(self):
         self.get_starships_response = namedtuple(typename='GET_Starships', field_names='status_code, request, response')
@@ -42,7 +43,7 @@ class SwapiApiConsumer:
             )
 
     @classmethod
-    def __send_http_requests(cls, req_prepared: Type[Request]) -> Type[Request]:
+    def __send_http_requests(cls, req_prepared: Type[Request]) -> Response:
         """
         Function to send HTTP to API in the right format.
         :param req_prepared: address informed by the function get_startship above

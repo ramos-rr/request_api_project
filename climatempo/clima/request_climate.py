@@ -36,7 +36,7 @@ class ClimateRequest(WeatherRequestInterface):
         return ErrorRaise.check_error(response)
 
 
-if __name__ == '__main__':
-    climatempo = ClimateRequest()
-    climatempo.get_weather(country='BR')
-    print(climatempo)
+# if __name__ == '__main__':
+#     climatempo = ClimateRequest()
+#     climatempo.get_weather(country='BR')
+#     print(climatempo)

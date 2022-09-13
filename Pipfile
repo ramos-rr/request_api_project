@@ -11,6 +11,7 @@ requests = "*"
 requests-mock = "*"
 pytest-cov = "*"
 python-decouple = "*"
+faker = "*"
 
 [dev-packages]
 

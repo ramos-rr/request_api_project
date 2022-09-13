@@ -9,11 +9,9 @@ import requests
 class CurrentWeatherRequest(WeatherRequestInterface):
 
     __TOKEN_CLIMATEMPO = config('TOKEN_CLIMATEMPO')
-    __CITY = config('CITY')
-    __STATE = config('STATE')
 
     @staticmethod
-    def get_weather(city=__CITY, state=__STATE, token=__TOKEN_CLIMATEMPO):
+    def get_weather(city=config('CITY'), state=config('STATE'), token=__TOKEN_CLIMATEMPO):
         city_id = CityIdRequest.get_id(city=city, uf=state)
         # CurrentWeatherRequest._put_location(city_id)
         request_raw = requests.Request(
@@ -25,6 +23,7 @@ class CurrentWeatherRequest(WeatherRequestInterface):
         print(f'Imprimindo o clima de {response.json()["name"]} / {response.json()["state"]}:')
         for chave, valor in response.json()['data'].items():
             print(chave.title(), valor, sep=': ')
+        return response.json()
 
     @staticmethod
     def _prepare_request(request_raw: any):

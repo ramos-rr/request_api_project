@@ -41,9 +41,3 @@ class CityIdRequest(IdRequestInterface):
     @staticmethod
     def _check_error(response: any, **kwargs):
         return ErrorRaise.check_error(response)
-
-
-if __name__ == '__main__':
-    city = CityIdRequest()
-    city.get_id('jundiaí', 'sp')
-
