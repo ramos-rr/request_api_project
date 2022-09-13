@@ -56,8 +56,8 @@ class CurrentWeatherRequest(WeatherRequestInterface):
     #     CurrentWeatherRequest._check_error(response_put)
     #     return None
 
-
-if __name__ == '__main__':
-    temp = CurrentWeatherRequest()
-    temp.get_weather()
-
+#
+# if __name__ == '__main__':
+#     temp = CurrentWeatherRequest()
+#     temp.get_weather()
+#

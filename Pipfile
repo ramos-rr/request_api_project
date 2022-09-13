@@ -12,6 +12,8 @@ requests-mock = "*"
 pytest-cov = "*"
 python-decouple = "*"
 faker = "*"
+fastapi = "*"
+uvicorn = "*"
 
 [dev-packages]
 
