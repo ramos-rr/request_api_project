@@ -15,6 +15,7 @@ def home(request: RequestFastApi):
 
 
 @starships_routes.get('/api/starships/list')
+# async def means that some requests will have to wait the response, that it can't be so fast otherwise is going to fail
 async def get_starships_in_pagination(request: RequestFastApi):
     """
     Get Starship paginator

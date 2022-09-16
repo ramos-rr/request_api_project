@@ -2,6 +2,7 @@ from typing import Callable
 from fastapi import APIRouter, Request as RequestFastApi
 
 
+# DEFINING AN ADAPTOR IS DEFINING A BRIDGE BETWEEN FASTAPI AND A METHOD INSIDE OUR INTERNAL PROGRAM (USERCASE)
 async def request_adapter(request: RequestFastApi, callback: Callable):  # callback:Callable is used to do an action!
     """ FastAPI Adapter"""
 
@@ -11,6 +12,7 @@ async def request_adapter(request: RequestFastApi, callback: Callable):  # callb
     except:
         body = None
 
+    # HTTP REQUEST
     http_request = {
         'query_params': request.query_params,
         'body': body,
