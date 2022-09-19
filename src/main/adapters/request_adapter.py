@@ -1,18 +1,21 @@
+"""
+DEFINING AN ADAPTOR IS DEFINING A BRIDGE BETWEEN FASTAPI AND A METHOD INSIDE OUR INTERNAL PROGRAM (USERCASE)
+THIS ADAPTER WILL BE CALLED BY ROUTES!
+"""
 from typing import Callable
 from fastapi import APIRouter, Request as RequestFastApi
 
 
-# DEFINING AN ADAPTOR IS DEFINING A BRIDGE BETWEEN FASTAPI AND A METHOD INSIDE OUR INTERNAL PROGRAM (USERCASE)
 async def request_adapter(request: RequestFastApi, callback: Callable):  # callback:Callable is used to do an action!
     """ FastAPI Adapter"""
 
-    # BODY
+    # BODY - Build up the BODY content to Recieve something from webpage OR NOT, to avoid error occurrence
     try:
-        body = await request.json()
-    except:
+        body = await request.json()  # AWAIT: to wait a litle bite before continuing the code (Waits for the body)
+    except:  # If no BODY is provided, then SET UP a NONE BODY!
         body = None
 
-    # HTTP REQUEST
+    # HTTP REQUEST - STRUTURE YOUR REQUEST
     http_request = {
         'query_params': request.query_params,
         'body': body,

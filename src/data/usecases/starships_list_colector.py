@@ -30,4 +30,3 @@ class StarshipsListColectior(StarshipsListColectiorInterface):
                 }
             )
         return starships_formated_list
-

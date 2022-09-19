@@ -15,6 +15,7 @@ faker = "*"
 fastapi = "*"
 uvicorn = "*"
 cerberus = "*"
+jinja2 = "*"
 
 [dev-packages]
 

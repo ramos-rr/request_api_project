@@ -45,7 +45,7 @@ class SwapiApiConsumer(SwapiApiConsumerInterface):
     @classmethod
     def __send_http_requests(cls, req_prepared: Type[Request]) -> Response:
         """
-        Function to send HTTP to API in the right format.
+        Method to send HTTP to API in the right format.
         :param req_prepared: address informed by the function get_startship above
         :return: HTTP in the right format
         """
