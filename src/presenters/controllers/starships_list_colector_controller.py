@@ -8,7 +8,7 @@ class StarshipsListColectoController:
     def __init__(self, starship_list_colector: Type[StarshipsListColectiorInterface]) -> None:
         self.__use_case = starship_list_colector  # Indicate WHO IS THE USECASE FOR THIS CLASS
 
-    # DEINE A METHOD THAST WILL RECIEVE THOSE QUERY_PARAMS FROM PAGE TO SEND TO USECASE
+    # DEINE A METHOD THAT WILL RECIEVE THOSE QUERY_PARAMS FROM PAGE TO SEND TO USECASE
     def handle_page_parameter(self, http_request: Dict) -> Dict:
         """
         Method that recieves a validated http and call USECASE to get the information desided.

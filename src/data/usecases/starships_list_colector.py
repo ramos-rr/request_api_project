@@ -3,7 +3,7 @@ from src.data.interfaces.swapi_api_consumer import SwapiApiConsumerInterface
 from src.domain.usecases.starships_list_colector import StarshipsListColectiorInterface
 
 
-class StarshipsListColectior(StarshipsListColectiorInterface):
+class StarshipsListCollector(StarshipsListColectiorInterface):
     """ StarshipsListColector usecase """
 
     def __init__(self, api_consumer: Type[SwapiApiConsumerInterface]) -> None:

@@ -1,15 +1,18 @@
 import requests
-from typing import Type  # Tuple, Dict
+from typing import Type
 from requests import Request, Response
 from collections import namedtuple
 from src.data.interfaces.swapi_api_consumer import SwapiApiConsumerInterface
-from src.errors import HttpRequestErrors
+from src.errors import HttpRequestErrors, HttpUnprocessableEntityError
 
 
 class SwapiApiConsumer(SwapiApiConsumerInterface):
 
     def __init__(self):
         self.get_starships_response = namedtuple(typename='GET_Starships', field_names='status_code, request, response')
+        # IMPLEMENT NEW FEATURES TO ADVANCE TOWARD AN INDIVIUAL STARSHIP
+        self.get_starship_info_response = namedtuple(typename='GET_Starship_Info',
+                                                     field_names='status_code, request, response')
 
     def get_starships(self, page: int) -> 'GET_Starships':
         """
@@ -38,9 +41,41 @@ class SwapiApiConsumer(SwapiApiConsumerInterface):
                 response=response.json()
             )
         else:
-            raise HttpRequestErrors(
-                message=response.json()["detail"], status_code=status_code
+            if status_code == 422:
+                raise HttpUnprocessableEntityError(message=response.json())
+            else:
+                raise HttpRequestErrors(
+                    message=response.json()["detail"], status_code=status_code
+                )
+
+    def get_starship_information(self, starship_id: int) -> 'GET_Starship_Info':
+        """
+        Funtion to get information of a single Starship
+        :param starship_id: int: A ID of a single starship.
+        :return: Full HTTP page in JSON format.
+        """
+
+        req_raw = requests.Request(
+            method='GET',
+            url=f'https://swapi.dev/api/starships/{starship_id}/',
+        )
+        req_prepared = req_raw.prepare()  # function prepare() comes with requests
+        response = self.__send_http_requests(req_prepared)
+        status_code = response.status_code
+
+        if 200 <= status_code <= 299:
+            return self.get_starship_info_response(
+                status_code=status_code,
+                request=req_raw,
+                response=response.json()
             )
+        else:
+            if status_code == 422:
+                raise HttpUnprocessableEntityError(message=response.json())
+            else:
+                raise HttpRequestErrors(
+                    message=response.json()["detail"], status_code=status_code
+                )
 
     @classmethod
     def __send_http_requests(cls, req_prepared: Type[Request]) -> Response:

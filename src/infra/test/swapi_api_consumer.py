@@ -22,13 +22,30 @@ def mock_starships():
     }
 
 
+def mock_starship_info():
+    """
+     Mocked data for Starship Information dictionary
+    :return Data from this starship
+    """
+    return {
+        "name": fake.name(),
+        "model": fake.name(),
+        "max_atmosphering_speed": fake.random_int(),
+        "hyperdrive_rating": fake.random_int(),
+        "MGLT": fake.random_int(),
+    }
+
+
 class SwapiApiConsumerSpy:
     """
     Mock for SwapiApiCOnsumer
     """
     def __init__(self):
         self.get_starships_response = namedtuple(typename='GET_Starships', field_names='status_code, request, response')
+        self.get_starship_info_response = namedtuple(typename='GET_Starship_Info',
+                                                     field_names='status_code, request, response')
         self.get_starships_atributes = {}
+        self.get_starship_info_atributes = {}
 
     def get_starships(self, page: int) -> any:
         """
@@ -43,3 +60,15 @@ class SwapiApiConsumerSpy:
             response={"results": [mock_starships()]}
         )
 
+    def get_starship_information(self, starship_id: int) -> 'GET_Starship_Info':
+        """
+        Mock get_starship_information
+        :param starship_id: Starship ID
+        :return: A dictionary with starship information
+        """
+        self.get_starship_info_atributes["starship_id"] = starship_id
+        return self.get_starship_info_response(
+            status_code=200,
+            request=None,
+            response=mock_starship_info()
+        )
